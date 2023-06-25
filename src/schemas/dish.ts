@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
-const CATEGORIES = ['PROTEIN', 'SIDE_DISH', 'SALAD', 'DESSERT', 'DRINK'] as const
+export const CATEGORIES = ['PROTEIN', 'SIDE_DISH', 'SALAD', 'DESSERT', 'DRINK'] as const
+export type Category = typeof CATEGORIES[number]
 
 export const DishSchema = z.object({
     id: z.number(),

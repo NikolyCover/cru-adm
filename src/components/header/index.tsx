@@ -12,7 +12,7 @@ export const Header = () => {
     }
 
 	return (
-		<Stack direction="row" justifyContent="space-between" sx={{ marginY: theme.spacing(2) }}>
+		<Stack direction="row" justifyContent="space-between" sx={{ paddingY: theme.spacing(2), mb: theme.spacing(2) }}>
 			<Logo />
 			<Stack direction="row" gap={4}>
 				<Button variant="text" onClick={() => handleClick('menus')}>Cardápios</Button>
