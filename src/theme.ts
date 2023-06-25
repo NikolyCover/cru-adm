@@ -37,7 +37,7 @@ export const theme = createTheme({
 	typography: {
 		fontFamily: ['Fredoka'].join(','),
 		allVariants: {
-			color: '#FFF'
+			
 		},
 		button: {
 			color: '#FFF'
@@ -53,6 +53,44 @@ export const theme = createTheme({
 					},
 				}
 			]
-		}
+		},
+		MuiTableCell: {
+			styleOverrides: {
+				root: {
+					borderColor: CRU_COLORS.blue.light,
+					fontWeight: '400',
+					color: '#FFF'
+				},
+				head: {
+					fontWeight: 600,
+				},
+				footer: {
+					border: 'none',
+				},
+			},
+		},
+		MuiTableRow: {
+			styleOverrides: {
+				head: {
+					borderRadius: 8,
+					background: CRU_COLORS.blue.main,
+				},
+			},
+		},
+		MuiTablePagination: {
+			styleOverrides: {
+				root: {
+					fontSize: '0.75rem',
+					color: '#FFF',
+				},
+				selectLabel: {
+					fontSize: '0.75rem',
+				},
+				displayedRows: {
+					fontSize: '0.75rem',
+				},
+			},
+		},
+
 	}
 })
