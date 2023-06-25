@@ -1,7 +1,12 @@
 import { Typography } from '@mui/material'
+import { NavigationLayout } from '../../layouts/navigation'
 
 const MenusPage: React.FC = () => {
-	return <Typography>Menus Page</Typography>
+	return (
+		<NavigationLayout>
+			<Typography>Menus Page</Typography>
+		</NavigationLayout>
+	)
 }
 
 export default MenusPage

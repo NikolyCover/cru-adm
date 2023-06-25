@@ -35,6 +35,24 @@ export const theme = createTheme({
         cru: { ...CRU_COLORS },
     },
 	typography: {
-		fontFamily: ['Fredoka'].join(',')
+		fontFamily: ['Fredoka'].join(','),
+		allVariants: {
+			color: '#FFF'
+		},
+		button: {
+			color: '#FFF'
+		}
+	},
+	components: {
+		MuiButton: {
+			variants: [
+				{
+					props: { variant:'text' },
+					style: {
+						color: '#FFF'
+					},
+				}
+			]
+		}
 	}
 })
