@@ -39,9 +39,6 @@ export const theme = createTheme({
 		allVariants: {
 			
 		},
-		button: {
-			color: '#FFF'
-		}
 	},
 	components: {
 		MuiButton: {
@@ -57,22 +54,20 @@ export const theme = createTheme({
 		MuiTableCell: {
 			styleOverrides: {
 				root: {
-					borderColor: CRU_COLORS.blue.light,
 					fontWeight: '400',
-					color: '#FFF'
 				},
 				head: {
 					fontWeight: 600,
-				},
-				footer: {
-					border: 'none',
+					color: '#FFF'
 				},
 			},
 		},
 		MuiTableRow: {
 			styleOverrides: {
+				root: {
+					backgroundColor: '#FFF',
+				},
 				head: {
-					borderRadius: 8,
 					background: CRU_COLORS.blue.main,
 				},
 			},
@@ -81,7 +76,6 @@ export const theme = createTheme({
 			styleOverrides: {
 				root: {
 					fontSize: '0.75rem',
-					color: '#FFF',
 				},
 				selectLabel: {
 					fontSize: '0.75rem',

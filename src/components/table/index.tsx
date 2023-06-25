@@ -1,4 +1,5 @@
 import {
+	Paper,
 	TableBody,
 	TableCell,
 	TableContainer,
@@ -44,7 +45,7 @@ export const Table: React.FC<Props> = ({ headings, data }) => {
 	}
 
 	return (
-		<TableContainer >
+		<TableContainer component={Paper} >
 			<TableWrapper>
 				<TableHead>
 					<TableRow>
