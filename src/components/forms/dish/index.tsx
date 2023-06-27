@@ -11,7 +11,8 @@ import { useState } from 'react'
 import { Loading } from '../../loading'
 import { feedbackAtom } from '../../../contexts/feedback'
 import { CREATE_DISH_ERROR_MESSAGE, CREATE_DISH_SUCESS_MESSAGE } from '../../../consts/messages'
-import { useRecoilState } from 'recoil'
+import { useRecoilRefresher_UNSTABLE, useRecoilState } from 'recoil'
+import { dishesSelector } from '../../../contexts/dish'
 
 interface Props {
 	close: () => void
@@ -19,7 +20,8 @@ interface Props {
 
 export const DishForm: React.FC<Props> = ({ close }) => {
 	const [isLoading, setIsLoading] = useState(false)
-    const [feedback, setFeedback] = useRecoilState(feedbackAtom)
+    const [, setFeedback] = useRecoilState(feedbackAtom)
+	const refreshDishes = useRecoilRefresher_UNSTABLE(dishesSelector)
 
 	const {
 		register,
@@ -35,6 +37,7 @@ export const DishForm: React.FC<Props> = ({ close }) => {
                 value: 'success',
                 message: CREATE_DISH_SUCESS_MESSAGE
             })
+			refreshDishes()
 		} catch (error) {
             setFeedback({
                 value: 'error',

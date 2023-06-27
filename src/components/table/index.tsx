@@ -30,7 +30,7 @@ export const Table: React.FC<Props> = ({ headings, data }) => {
 		[data, pagination]
 	)
 
-    const handleChangePage = (event: any, page: number) => {
+    const handleChangePage = (_event: any, page: number) => {
 		setPagination({
 			...pagination,
 			page,

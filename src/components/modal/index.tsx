@@ -9,7 +9,6 @@ export interface ModalHandles {
 interface Props {
     title: string
     children: ReactNode
-    handleEnd?: () => void
 }
 
 const Modal: React.ForwardRefRenderFunction<ModalHandles, Props> = ({ title, children }, ref) => {
@@ -24,7 +23,7 @@ const Modal: React.ForwardRefRenderFunction<ModalHandles, Props> = ({ title, chi
 	}
 
     const close = () => {
-		setVisible(false)
+        setVisible(false)
 	}
 
 	return (

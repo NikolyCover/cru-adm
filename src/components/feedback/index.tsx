@@ -7,7 +7,7 @@ export const Feedback: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false)
 	const [feedback, setFeedback] = useRecoilState(feedbackAtom)
 
-	const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+	const handleClose = (_event?: React.SyntheticEvent | Event, reason?: string) => {
 		if (reason === 'clickaway') {
 			return
 		}

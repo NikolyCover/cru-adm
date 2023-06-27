@@ -1,25 +1,17 @@
 import { Button, Stack } from '@mui/material'
-import Modal, { ModalHandles } from '../../modal'
-import { useRef } from 'react'
-import { DishForm } from '../../forms/dish'
 
 interface Props {
 	buttonLabel: string
+	buttonOnClick: () => void
 }
 
-export const TableOptions: React.FC<Props> = ({ buttonLabel }) => {
-    const modalRef = useRef<ModalHandles>(null)
-
-    const openModal = () => modalRef.current?.open()
+export const TableOptions: React.FC<Props> = ({ buttonLabel, buttonOnClick }) => {
 
 	return (
 		<Stack justifyContent="flex-end" sx={{ mb: 2 }}>
-			<Button variant="contained" size="medium" onClick={openModal}>
+			<Button variant="contained" size="medium" onClick={buttonOnClick}>
 				{buttonLabel}
 			</Button>
-            <Modal ref={modalRef} title='Cadastrar prato'>
-                <DishForm close={() => modalRef.current?.close()} />
-            </Modal>
 		</Stack>
 	)
 }
