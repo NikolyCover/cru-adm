@@ -9,9 +9,10 @@ export interface ModalHandles {
 interface Props {
     title: string
     children: ReactNode
+    actionOnClose: () => void
 }
 
-const Modal: React.ForwardRefRenderFunction<ModalHandles, Props> = ({ title, children }, ref) => {
+const Modal: React.ForwardRefRenderFunction<ModalHandles, Props> = ({ title, children, actionOnClose }, ref) => {
 	const [visible, setVisible] = useState(false)
 
     useImperativeHandle(ref, () => (
@@ -24,6 +25,7 @@ const Modal: React.ForwardRefRenderFunction<ModalHandles, Props> = ({ title, chi
 
     const close = () => {
         setVisible(false)
+        actionOnClose()
 	}
 
 	return (

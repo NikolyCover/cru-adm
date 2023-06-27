@@ -39,12 +39,12 @@ export const Table: React.FC<Props> = ({ headings, data, options }) => {
 						<TableRow key={dish.id}>
 							<TableCell>{toString(dish.name)}</TableCell>
 							<TableCell>{toString(dish.description)}</TableCell>
-							<TableCell>{toString(dish.contains_milk)}</TableCell>
-							<TableCell>{toString(dish.contains_meat)}</TableCell>
+							<TableCell>{toString(dish.containsMilk)}</TableCell>
+							<TableCell>{toString(dish.containsMeat)}</TableCell>
 							<TableCell>{toString(dish.category)}</TableCell>
 							{options && (
 								<TableCell>
-									<Options />
+									<Options options={options} datumId={dish.id}/>
 								</TableCell>
 							)}
 						</TableRow>

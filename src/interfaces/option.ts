@@ -1,4 +1,4 @@
 export interface IOption {
 	label: string
-	action: () => void
+	action: (datumId: number) => void
 }

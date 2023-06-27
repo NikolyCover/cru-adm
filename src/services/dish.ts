@@ -15,3 +15,13 @@ export const createDish = (data: DishParamns): Promise<AxiosResponse<Dish>> => {
     }
     return cruAPI.post(`/dishes`, formatedData)
 }
+
+export const updateDish = (data: Dish): Promise<AxiosResponse<Dish>> => {
+    const formatedData = {
+        name: data.name,
+        contains_milk: data.containsMilk,
+        contains_meat: data.containsMeat,
+        category: data.category
+    }
+    return cruAPI.put(`/dishes/${data.id}`, formatedData)
+}

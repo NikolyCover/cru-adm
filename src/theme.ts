@@ -27,6 +27,7 @@ const CRU_COLORS = {
 	neutral: {
 		main: '#7F969D',
 		white: '#FFF',
+		dark: '#000000DE'
 	},
 }
 
