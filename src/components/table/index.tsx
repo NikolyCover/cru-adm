@@ -13,13 +13,16 @@ import { Dish } from '../../schemas/dish'
 import { toString } from '../../utils/to-string'
 import { useMemo, useState } from 'react'
 import { paginateArray } from '../../utils/paginate-array'
+import { IOption } from '../../interfaces/option'
+import { Options } from '../options'
 
 interface Props {
 	headings: string[]
 	data: Dish[]
+	options?: IOption[]
 }
 
-export const Table: React.FC<Props> = ({ headings, data }) => {
+export const Table: React.FC<Props> = ({ headings, data, options }) => {
 	const [pagination, setPagination] = useState({
 		rowsPerPage: 10,
 		page: 0,
@@ -52,6 +55,7 @@ export const Table: React.FC<Props> = ({ headings, data }) => {
 						{headings.map((heading, index) => (
 							<TableCell key={index}>{heading}</TableCell>
 						))}
+						{options && <TableCell></TableCell>}
 					</TableRow>
 				</TableHead>
 				<TableBody>
@@ -62,6 +66,7 @@ export const Table: React.FC<Props> = ({ headings, data }) => {
 							<TableCell>{toString(dish.contains_milk)}</TableCell>
 							<TableCell>{toString(dish.contains_meat)}</TableCell>
 							<TableCell>{toString(dish.category)}</TableCell>
+							{options && <TableCell><Options /></TableCell>}
 						</TableRow>
 					))}
 				</TableBody>
