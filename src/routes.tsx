@@ -1,12 +1,13 @@
 import { Suspense, lazy } from 'react'
 import { BrowserRouter, Routes as SwitchRoutes, Route, Navigate } from 'react-router-dom'
+import { Loading } from './components/loading'
 
 const MenusPage = lazy(() => import('./pages/menus'))
 const DishesPage = lazy(() => import('./pages/dishes'))
 
 export const Routes: React.FC = () => (
 	<BrowserRouter>
-		<Suspense fallback={<p>Loading...</p>}>
+		<Suspense fallback={<Loading open={true} isPage />}>
 			<SwitchRoutes>
 				<Route path="/">
 					<Route index element={<Navigate to='menus' /> } />
