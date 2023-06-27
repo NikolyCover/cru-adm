@@ -1,20 +1,13 @@
-import {
-	Paper,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableFooter,
-	TableHead,
-	TablePagination,
-	TableRow,
-	Table as TableWrapper,
-} from '@mui/material'
+import { Paper, TableBody, TableCell, TableContainer, TableHead, TableRow, Table as TableWrapper } from '@mui/material'
 import { Dish } from '../../schemas/dish'
 import { toString } from '../../utils/to-string'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { paginateArray } from '../../utils/paginate-array'
 import { IOption } from '../../interfaces/option'
 import { Options } from '../options'
+import { useRecoilValue } from 'recoil'
+import { paginationAtom } from '../../contexts/pagination'
+import { Footer } from './footer'
 
 interface Props {
 	headings: string[]
@@ -23,32 +16,15 @@ interface Props {
 }
 
 export const Table: React.FC<Props> = ({ headings, data, options }) => {
-	const [pagination, setPagination] = useState({
-		rowsPerPage: 10,
-		page: 0,
-	})
+	const pagination = useRecoilValue(paginationAtom)
 
 	const paginatedData = useMemo(
 		() => paginateArray(data, pagination.rowsPerPage, pagination.page),
 		[data, pagination]
 	)
 
-    const handleChangePage = (_event: any, page: number) => {
-		setPagination({
-			...pagination,
-			page,
-		})
-	}
-
-	const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setPagination({
-			page: 0,
-			rowsPerPage: Number(event.target.value),
-		})
-	}
-
 	return (
-		<TableContainer component={Paper} >
+		<TableContainer component={Paper}>
 			<TableWrapper>
 				<TableHead>
 					<TableRow>
@@ -66,26 +42,15 @@ export const Table: React.FC<Props> = ({ headings, data, options }) => {
 							<TableCell>{toString(dish.contains_milk)}</TableCell>
 							<TableCell>{toString(dish.contains_meat)}</TableCell>
 							<TableCell>{toString(dish.category)}</TableCell>
-							{options && <TableCell><Options /></TableCell>}
+							{options && (
+								<TableCell>
+									<Options />
+								</TableCell>
+							)}
 						</TableRow>
 					))}
 				</TableBody>
-				<TableFooter>
-					<TableRow>
-						<TablePagination
-							count={data.length}
-							rowsPerPage={pagination.rowsPerPage}
-							page={pagination.page}
-							onPageChange={handleChangePage}
-							onRowsPerPageChange={handleChangeRowsPerPage}
-							labelRowsPerPage={'Linhas por página:'}
-							labelDisplayedRows={({ from, to, count }) => {
-								return from + ' a ' + to + ' de ' + count
-							}}
-							rowsPerPageOptions={[5, 10, 20, 50, 100]}
-						/>
-					</TableRow>
-				</TableFooter>
+				<Footer count={data.length} />
 			</TableWrapper>
 		</TableContainer>
 	)
