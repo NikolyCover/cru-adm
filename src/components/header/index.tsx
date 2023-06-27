@@ -12,11 +12,11 @@ export const Header = () => {
     }
 
 	return (
-		<Stack direction="row" justifyContent="space-between" sx={{ paddingY: theme.spacing(2), mb: theme.spacing(2) }}>
+		<Stack direction="row" justifyContent="space-between" sx={{ paddingY: theme.spacing(2), mb: theme.spacing(4) }}>
 			<Logo />
 			<Stack direction="row" gap={4}>
-				<Button variant="text" onClick={() => handleClick('menus')}>Cardápios</Button>
-				<Button variant="text" onClick={() => handleClick('dishes')}>Pratos</Button>
+				<Button variant="text" size='small' onClick={() => handleClick('menus')}>Cardápios</Button>
+				<Button variant="text" size='small' onClick={() => handleClick('dishes')}>Pratos</Button>
 			</Stack>
 		</Stack>
 	)

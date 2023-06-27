@@ -36,18 +36,33 @@ export const theme = createTheme({
     },
 	typography: {
 		fontFamily: ['Fredoka'].join(','),
-		allVariants: {
-			
-		},
+		h1: {
+			fontSize: 32,
+			color: '#FFF'
+		}
 	},
 	components: {
 		MuiButton: {
 			variants: [
 				{
-					props: { variant:'text' },
+					props: { variant: 'text' },
 					style: {
 						color: '#FFF'
 					},
+				},
+				{
+					props: { variant: 'contained' },
+					style: {
+						backgroundColor: CRU_COLORS.blue.main,
+						textTransform: 'capitalize'
+					},
+				},
+				{
+					props: { size: 'medium' },
+					style: {
+						height: '2rem',
+						width: 160
+					}
 				}
 			]
 		},
