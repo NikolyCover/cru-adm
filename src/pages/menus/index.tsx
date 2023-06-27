@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 import { NavigationLayout } from '../../layouts/navigation'
-import { menusAtom } from '../../contexts/menu'
+import { menusAtom } from '../../contexts/menu' 
 import { useRecoilValue } from 'recoil'
 
 const MenusPage: React.FC = () => {
