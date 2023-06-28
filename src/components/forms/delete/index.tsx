@@ -9,6 +9,7 @@ import { deleteDish } from '../../../services/dish'
 import { Typography } from '@mui/material'
 import { Butttons } from '../../buttons'
 import { useForm } from 'react-hook-form'
+import { AxiosError } from 'axios'
 
 interface Props {
 	close: () => void
@@ -25,6 +26,7 @@ export const DeleteForm: React.FC<Props> = ({ close, value }) => {
 	const submit = async () => {
 		setIsLoading(true)
 		try {
+            console.log(value.id)
 			await deleteDish(value.id)
 
 			setFeedback({
@@ -36,7 +38,7 @@ export const DeleteForm: React.FC<Props> = ({ close, value }) => {
 		} catch (error) {
 			setFeedback({
 				value: 'error',
-				message: DELETE_DISH_ERROR_MESSAGE,
+				message: DELETE_DISH_ERROR_MESSAGE + (error as AxiosError).message,
 			})
 		}
 		setIsLoading(false)
@@ -47,7 +49,7 @@ export const DeleteForm: React.FC<Props> = ({ close, value }) => {
 		<>
 			<Loading open={isLoading} />
 			<form onSubmit={handleSubmit(submit)}>
-				<Typography>Você tem certeza que deseja apagar {value.name}?</Typography>
+				<Typography>Você tem certeza que deseja apagar o prato {value.name}?</Typography>
 				<Butttons type='delete'  close={close} />
 			</form>
 		</>

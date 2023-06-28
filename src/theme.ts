@@ -7,6 +7,7 @@ declare module '@mui/material/styles/createPalette' {
 		cru: {
 			blue: IColor
 			neutral: IColor
+			red: IColor
 		}
 	}
 
@@ -14,6 +15,7 @@ declare module '@mui/material/styles/createPalette' {
         cru: {
             blue: IColor
 			neutral: IColor
+			red: IColor
         },
     }
 }
@@ -27,8 +29,11 @@ const CRU_COLORS = {
 	neutral: {
 		main: '#7F969D',
 		white: '#FFF',
-		dark: '#000000DE'
+		dark: '#2B2626'
 	},
+	red: {
+		main: '#f44336'
+	}
 }
 
 export const theme = createTheme({
@@ -55,7 +60,6 @@ export const theme = createTheme({
 					props: { variant: 'contained' },
 					style: {
 						backgroundColor: CRU_COLORS.blue.main,
-						textTransform: 'capitalize'
 					},
 				},
 				{
@@ -64,8 +68,14 @@ export const theme = createTheme({
 						height: '2rem',
 						width: 160
 					}
+				},
+				{
+					props: { color: 'error' },
+					style: {
+						backgroundColor: `${CRU_COLORS.red.main} !important`,
+					}
 				}
-			]
+			],
 		},
 		MuiTableCell: {
 			styleOverrides: {

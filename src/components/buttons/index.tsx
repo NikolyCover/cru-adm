@@ -16,7 +16,7 @@ export const Butttons: React.FC<Props> = ({ close, type = 'default' }) => {
 			<Button variant="text" sx={{ color: type === 'delete' ? theme.palette.cru.neutral.dark : theme.palette.cru.blue.main }} size="large" onClick={onClickCancel}>
 				Cancelar
 			</Button>
-			<Button variant="contained" size="large" type="submit" sx={{ backgroundColor: type === 'delete' && theme.palette.error.main }} >
+			<Button variant="contained" size="large" type="submit" color={type === 'delete' ? 'error' : 'primary'} >
 				{type === 'delete' ? 'Apagar' : 'Finalizar'}
 			</Button>
 		</Stack>

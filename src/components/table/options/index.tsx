@@ -9,7 +9,7 @@ export const TableOptions: React.FC<Props> = ({ buttonLabel, buttonOnClick }) =>
 
 	return (
 		<Stack justifyContent="flex-end" sx={{ mb: 2 }}>
-			<Button variant="contained" size="medium" onClick={buttonOnClick}>
+			<Button variant="contained" size="medium" onClick={buttonOnClick} sx={{ textTransform: 'capitalize' }}>
 				{buttonLabel}
 			</Button>
 		</Stack>
