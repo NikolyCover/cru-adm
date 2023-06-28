@@ -2,6 +2,8 @@ import { atom, atomFamily, selector, selectorFamily } from 'recoil'
 import { AxiosError } from 'axios'
 import { getAllDishes, getDish } from '../services/dish'
 import { Dish } from '../schemas/dish'
+import { searchAtom } from './filtering'
+import { dishIncludesValue } from '../utils/dish-includes-value'
 
 export const dishesSelector = selector({
 	key: 'dishes-selector',
@@ -14,6 +16,16 @@ export const dishesSelector = selector({
 			return []
 		}
 	},
+})
+
+export const filteredDishesSelector = selector({
+	key: 'filtered-dishes-selector',
+	get: ({ get }) => {
+		const searchValue = get(searchAtom)
+		const dishes = get(dishesAtom)
+
+		return dishes.filter((dish) => dishIncludesValue(dish, searchValue))
+	}
 })
 
 export const dishesAtom = atom({

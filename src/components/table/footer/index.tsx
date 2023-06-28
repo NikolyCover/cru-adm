@@ -1,6 +1,6 @@
 import { TableFooter, TablePagination, TableRow } from '@mui/material'
 import { useRecoilState } from 'recoil'
-import { paginationAtom } from '../../../contexts/pagination'
+import { paginationAtom } from '../../../contexts/filtering'
 
 interface Props {
 	count: number

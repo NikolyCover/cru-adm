@@ -1,6 +1,6 @@
 import { NavigationLayout } from '../../layouts/navigation'
 import { useRecoilValue } from 'recoil'
-import { dishAtom, dishesAtom } from '../../contexts/dish'
+import { dishAtom, filteredDishesSelector } from '../../contexts/dish'
 import { Table } from '../../components/table'
 import { TableOptions } from '../../components/table/options'
 import { Typography } from '@mui/material'
@@ -9,7 +9,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DishForm } from '../../components/forms/dish'
 import { IAction } from '../../interfaces/action'
 import { DeleteForm } from '../../components/forms/delete'
-import { Dish } from '../../schemas/dish'
 
 const HEADINGS = [
 	'Nome',
@@ -23,7 +22,7 @@ type ModalGoal = 'create' | 'edit' | 'delete'
 
 const DishesPage: React.FC = () => {
 	const modalRef = useRef<ModalHandles>(null)
-	const dishes = useRecoilValue(dishesAtom)
+	const dishes = useRecoilValue(filteredDishesSelector)
 	const [dishId, setDishId] = useState(-1)
 	const dish = useRecoilValue(dishAtom(dishId))
 

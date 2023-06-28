@@ -6,7 +6,7 @@ import { paginateArray } from '../../utils/paginate-array'
 import { IAction } from '../../interfaces/action'
 import { Actions } from '../actions'
 import { useRecoilValue } from 'recoil'
-import { paginationAtom } from '../../contexts/pagination'
+import { paginationAtom } from '../../contexts/filtering'
 import { Footer } from './footer'
 
 interface Props {
