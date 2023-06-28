@@ -3,4 +3,5 @@ export interface IColor {
 	superLight?: React.CSSProperties['color']
 	main: React.CSSProperties['color']
 	dark?: React.CSSProperties['color']
+	superDark?: React.CSSProperties['color']
 }

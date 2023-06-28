@@ -22,13 +22,13 @@ declare module '@mui/material/styles/createPalette' {
 
 const CRU_COLORS = {
 	blue: {
-		dark: '#0C5C75',
+		superDark: '#0C5C75',
+		dark: '#1F99BE',
 		main: '#289FC3',
 		light: '#C9E7F0',
 	},
 	neutral: {
 		main: '#7F969D',
-		white: '#FFF',
 		dark: '#2B2626'
 	},
 	red: {
@@ -53,13 +53,20 @@ export const theme = createTheme({
 				{
 					props: { variant: 'text' },
 					style: {
-						color: '#FFF'
+						color: '#FFF',
+						
+						"&:hover": {
+							opacity: .95
+						}
 					},
 				},
 				{
 					props: { variant: 'contained' },
 					style: {
 						backgroundColor: CRU_COLORS.blue.main,
+						"&:hover": {
+							backgroundColor: CRU_COLORS.blue.dark,
+						}
 					},
 				},
 				{

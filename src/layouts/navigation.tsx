@@ -10,7 +10,7 @@ interface Props {
 
 export const NavigationLayout: React.FC<Props> = ({ children }) => {
 	return (
-		<Stack sx={{ backgroundColor: theme.palette.cru.blue.dark, minHeight: '100vh', paddingX: theme.spacing(10), pb: theme.spacing(3)}}>
+		<Stack sx={{ backgroundColor: theme.palette.cru.blue.superDark, minHeight: '100vh', paddingX: theme.spacing(10), pb: theme.spacing(3)}}>
 			<Header />
 			{children}
 			<Feedback />

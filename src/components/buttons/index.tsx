@@ -13,7 +13,7 @@ export const Butttons: React.FC<Props> = ({ close, type = 'default' }) => {
 
 	return (
 		<Stack direction="row" justifyContent="flex-end" gap={2} sx={{ py: 3 }}>
-			<Button variant="text" sx={{ color: type === 'delete' ? theme.palette.cru.neutral.dark : theme.palette.cru.blue.main }} size="large" onClick={onClickCancel}>
+			<Button variant="text" sx={{ color: type === 'delete' ? theme.palette.cru.neutral.superDark : theme.palette.cru.blue.main }} size="large" onClick={onClickCancel}>
 				Cancelar
 			</Button>
 			<Button variant="contained" size="large" type="submit" color={type === 'delete' ? 'error' : 'primary'} >

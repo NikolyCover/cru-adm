@@ -37,7 +37,10 @@ export const SearchBox: React.FC = () => {
 					height: theme.spacing(4),
 					fontSize: '0.75rem',
                     backgroundColor: '#FFF',
-                    width: theme.spacing(30)
+                    width: theme.spacing(30),
+					"&:hover fieldset": {
+						borderColor: `${theme.palette.cru.blue.main} !important`
+					}
 				},
 			}}
 			onChange={(e) => handleChange(e.target.value)}

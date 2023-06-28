@@ -45,7 +45,7 @@ export const Actions: React.FC<Props> = ({ actions, datumId }) => {
 			>
 				<Stack>
 					{actions?.map((opt, index) => (
-						<Button onClick={() => onClick(opt)} key={index} sx={{ color: theme.palette.cru.neutral.dark, width: theme.spacing(15) }}>
+						<Button onClick={() => onClick(opt)} key={index} sx={{ color: theme.palette.cru.neutral.superDark, width: theme.spacing(15) }}>
 							{opt.label}
 						</Button>
 					))}
