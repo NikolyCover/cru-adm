@@ -1,51 +1,51 @@
 import { MoreHoriz } from '@mui/icons-material'
 import { Button, IconButton, Popover, Stack } from '@mui/material'
-import { IOption } from '../../interfaces/option'
+import { IAction } from '../../interfaces/action'
 import { useMemo, useState } from 'react'
 import { theme } from '../../theme'
 
 interface Props {
-	options: IOption[]
+	actions: IAction[]
 	datumId: number
 }
 
-export const Options: React.FC<Props> = ({ options, datumId }) => {
+export const Actions: React.FC<Props> = ({ actions, datumId }) => {
 	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
-	const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+	const handleOpenPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget)
 	}
 
-	const handleClose = () => {
+	const handleClosePopover = () => {
 		setAnchorEl(null)
 	}
 
-	const onOptionClick = (opt: IOption) => {
-		opt.action(datumId)
-		setAnchorEl(null)
+	const onClick = (opt: IAction) => {
+		opt.func(datumId)
+		handleClosePopover()
 	}
 
 	const open = useMemo(() => !!anchorEl, [anchorEl])
-	const id = open ? 'options-popover' : undefined
+	const id = open ? 'actions-popover' : undefined
 
 	return (
 		<>
-			<IconButton aria-label="more" onClick={handleOpen}>
+			<IconButton aria-label="more" onClick={handleOpenPopover}>
 				<MoreHoriz />
 			</IconButton>
 			<Popover
 				id={id}
 				open={!!anchorEl}
 				anchorEl={anchorEl}
-				onClose={handleClose}
+				onClose={handleClosePopover}
 				anchorOrigin={{
 					vertical: 'bottom',
 					horizontal: 'left',
 				}}
 			>
 				<Stack>
-					{options?.map((opt, index) => (
-						<Button onClick={() => onOptionClick(opt)} key={index} sx={{ color: theme.palette.cru.neutral.dark, width: theme.spacing(15) }}>
+					{actions?.map((opt, index) => (
+						<Button onClick={() => onClick(opt)} key={index} sx={{ color: theme.palette.cru.neutral.dark, width: theme.spacing(15) }}>
 							{opt.label}
 						</Button>
 					))}

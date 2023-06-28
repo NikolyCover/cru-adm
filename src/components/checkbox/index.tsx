@@ -14,9 +14,9 @@ export function Checkbox<TProps extends FieldValues>({ register, name, label, de
 
 	return (
 		<FormControlLabel
-			control={<MuiCheckbox color="primary" {...register(name)} />}
+			control={<MuiCheckbox color="primary" {...register(name)} defaultChecked={defaultChecked} />}
 			label={label}
-			checked={defaultChecked}
+			//defaultChecked={defaultChecked}
 		/>
 	)
 }

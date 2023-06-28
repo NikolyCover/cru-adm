@@ -16,10 +16,10 @@ import { dishesSelector } from '../../../contexts/dish'
 
 interface Props {
 	close: () => void
-	values?: Dish
+	dish?: Dish
 }
 
-export const DishForm: React.FC<Props> = ({ close, values }) => {
+export const DishForm: React.FC<Props> = ({ close, dish }) => {
 	const [isLoading, setIsLoading] = useState(false)
     const [, setFeedback] = useRecoilState(feedbackAtom)
 	const refreshDishes = useRecoilRefresher_UNSTABLE(dishesSelector)
@@ -33,22 +33,22 @@ export const DishForm: React.FC<Props> = ({ close, values }) => {
 	const submit = async (paramns: DishParamns ) => {
 		setIsLoading(true)
 		try {
-			if(!!values) {
-				await updateDish({id: values.id, ...paramns})
+			if(!!dish) {
+				await updateDish({id: dish.id, ...paramns})
 			} else {
 				await createDish(paramns)
 			}
 
             setFeedback({
                 value: 'success',
-                message: values ? EDIT_DISH_SUCESS_MESSAGE : CREATE_DISH_SUCESS_MESSAGE
+                message: dish ? EDIT_DISH_SUCESS_MESSAGE : CREATE_DISH_SUCESS_MESSAGE
             })
 
 			refreshDishes()
 		} catch (error) {
             setFeedback({
                 value: 'error',
-                message: values ? EDIT_DISH_ERROR_MESSAGE : CREATE_DISH_ERROR_MESSAGE
+                message: dish ? EDIT_DISH_ERROR_MESSAGE : CREATE_DISH_ERROR_MESSAGE
             })
 		}
 		setIsLoading(false)
@@ -67,9 +67,9 @@ export const DishForm: React.FC<Props> = ({ close, values }) => {
 							error={!!errors.name}
 							helperText={errors.name?.message}
 							size="small"
-							defaultValue={values && values.name}
+							defaultValue={dish && dish.name}
 						/>
-						<Select register={register} name="category" label="Categoria" defaultValue={values ? values.category : CATEGORIES[0]}>
+						<Select register={register} name="category" label="Categoria" defaultValue={dish ? dish.category : CATEGORIES[0]}>
 							{CATEGORIES.map((category, index) => (
 								<MenuItem key={index} value={category}>
 									{CATEGORIES_LABELS[category]}
@@ -83,11 +83,11 @@ export const DishForm: React.FC<Props> = ({ close, values }) => {
 							error={!!errors.description}
 							helperText={errors.description?.message}
 							size="small"
-							defaultValue={values && values.description}
+							defaultValue={dish && dish.description}
 						/>
 					<Stack direction="row" justifyContent="space-between" gap={2}>
-						<Checkbox register={register} name="containsMilk" label="Contém leite" defaultChecked={values?.containsMilk} />
-						<Checkbox register={register} name="containsMeat" label="Contém carne" defaultChecked={values?.containsMeat} />
+						<Checkbox register={register} name="containsMilk" label="Contém leite" defaultChecked={!!dish?.containsMilk} />
+						<Checkbox register={register} name="containsMeat" label="Contém carne" defaultChecked={!!dish?.containsMeat} />
 					</Stack>
 					<Butttons close={close} />
 				</Stack>

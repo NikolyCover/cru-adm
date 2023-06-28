@@ -3,8 +3,8 @@ import { Dish } from '../../schemas/dish'
 import { toString } from '../../utils/to-string'
 import { useMemo } from 'react'
 import { paginateArray } from '../../utils/paginate-array'
-import { IOption } from '../../interfaces/option'
-import { Options } from '../options'
+import { IAction } from '../../interfaces/action'
+import { Actions } from '../actions'
 import { useRecoilValue } from 'recoil'
 import { paginationAtom } from '../../contexts/pagination'
 import { Footer } from './footer'
@@ -12,7 +12,7 @@ import { Footer } from './footer'
 interface Props {
 	headings: string[]
 	data: Dish[]
-	options?: IOption[]
+	options?: IAction[]
 }
 
 export const Table: React.FC<Props> = ({ headings, data, options }) => {
@@ -44,7 +44,7 @@ export const Table: React.FC<Props> = ({ headings, data, options }) => {
 							<TableCell>{toString(dish.category)}</TableCell>
 							{options && (
 								<TableCell>
-									<Options options={options} datumId={dish.id}/>
+									<Actions actions={options} datumId={dish.id}/>
 								</TableCell>
 							)}
 						</TableRow>

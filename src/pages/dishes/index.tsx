@@ -7,7 +7,7 @@ import { Typography } from '@mui/material'
 import Modal, { ModalHandles } from '../../components/modal'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DishForm } from '../../components/forms/dish'
-import { IOption } from '../../interfaces/option'
+import { IAction } from '../../interfaces/action'
 import { DeleteForm } from '../../components/forms/delete'
 import { Dish } from '../../schemas/dish'
 
@@ -29,9 +29,10 @@ const DishesPage: React.FC = () => {
 
 	const [modalGoal, setModalGoal] = useState<ModalGoal>('create')
 
-	const modalTitle = useMemo(() => modalGoal === 'create' ? 'Cadastrar' : (modalGoal === 'edit' ? 'Editar' : 'Apagar') + ' prato', [modalGoal])
+	const modalTitle = useMemo(() => (modalGoal === 'create' ? 'Cadastrar' : (modalGoal === 'edit' ? 'Editar' : 'Apagar')) + ' prato', [modalGoal])
 
     const openModal = useCallback(() => modalRef.current?.open(), [modalRef])
+	const closeModal = useCallback(() => modalRef.current?.close(), [modalRef])
 	
 	const edit = (dishId: number) => {
 		setModalGoal('edit')
@@ -53,9 +54,9 @@ const DishesPage: React.FC = () => {
 		if(modalGoal == 'create') setDishId(-1)
 	}, [modalGoal])
 
-	const options: IOption[] = [
-		{ label: 'Editar', action: edit},
-		{ label: 'Excluir', action: del}
+	const options: IAction[] = [
+		{ label: 'Editar', func: edit},
+		{ label: 'Excluir', func: del}
 	]
 
 	return (
@@ -64,7 +65,7 @@ const DishesPage: React.FC = () => {
 			<TableOptions buttonLabel='Cadastrar prato' buttonOnClick={openModal} />
 			<Table headings={HEADINGS} data={dishes} options={options} />
 			<Modal ref={modalRef} title={modalTitle} actionOnClose={handleCloseModal}>
-                {modalGoal === 'delete' && dish ? <DeleteForm close={() => modalRef.current?.close()} value={dish} /> : <DishForm close={() => modalRef.current?.close()} values={dish} />}
+                {modalGoal === 'delete' && dish ? <DeleteForm close={closeModal} value={dish} /> : <DishForm close={closeModal} dish={dish} />}
             </Modal>
 		</NavigationLayout>
 	)
