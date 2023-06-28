@@ -1,5 +1,5 @@
 import { NavigationLayout } from '../../layouts/navigation'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { dishAtom, dishesAtom } from '../../contexts/dish'
 import { Table } from '../../components/table'
 import { TableOptions } from '../../components/table/options'
@@ -8,6 +8,8 @@ import Modal, { ModalHandles } from '../../components/modal'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DishForm } from '../../components/forms/dish'
 import { IOption } from '../../interfaces/option'
+import { DeleteForm } from '../../components/forms/delete'
+import { Dish } from '../../schemas/dish'
 
 const HEADINGS = [
 	'Nome',
@@ -33,8 +35,8 @@ const DishesPage: React.FC = () => {
 	
 	const edit = (dishId: number) => {
 		setModalGoal('edit')
-		setDishId(dishId)
 		openModal()
+		setDishId(dishId)
 	}
 
 	const del = (dishId: number) => {
@@ -45,7 +47,6 @@ const DishesPage: React.FC = () => {
 
 	const handleCloseModal = () => {
 		setModalGoal('create')
-		//setDishId(-1)
 	}
 
 	useEffect(() => {
@@ -63,7 +64,7 @@ const DishesPage: React.FC = () => {
 			<TableOptions buttonLabel='Cadastrar prato' buttonOnClick={openModal} />
 			<Table headings={HEADINGS} data={dishes} options={options} />
 			<Modal ref={modalRef} title={modalTitle} actionOnClose={handleCloseModal}>
-                <DishForm close={() => modalRef.current?.close()} values={dish} />
+                {modalGoal === 'delete' && dish ? <DeleteForm close={() => modalRef.current?.close()} value={dish} /> : <DishForm close={() => modalRef.current?.close()} values={dish} />}
             </Modal>
 		</NavigationLayout>
 	)

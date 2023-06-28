@@ -13,3 +13,7 @@ export const createDish = (data: DishParamns): Promise<AxiosResponse<Dish>> => {
 export const updateDish = (data: Dish): Promise<AxiosResponse<Dish>> => {
 	return cruAPI.put(`/dishes/${data.id}`, data)
 }
+
+export const deleteDish = (id: number): Promise<AxiosResponse<Dish>> => {
+	return cruAPI.delete(`/dishes/${id}`)
+}

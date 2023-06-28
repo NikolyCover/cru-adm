@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { FormButtons } from '../../buttons'
+import { Butttons } from '../../buttons'
 import { Dish, DishParamns, DishParamnsSchema } from '../../../schemas/dish'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createDish, updateDish } from '../../../services/dish'
@@ -33,11 +33,17 @@ export const DishForm: React.FC<Props> = ({ close, values }) => {
 	const submit = async (paramns: DishParamns ) => {
 		setIsLoading(true)
 		try {
-			values ? await updateDish({id: values.id, ...paramns}) : await createDish(paramns)
+			if(!!values) {
+				await updateDish({id: values.id, ...paramns})
+			} else {
+				await createDish(paramns)
+			}
+
             setFeedback({
                 value: 'success',
                 message: values ? EDIT_DISH_SUCESS_MESSAGE : CREATE_DISH_SUCESS_MESSAGE
             })
+
 			refreshDishes()
 		} catch (error) {
             setFeedback({
@@ -46,6 +52,7 @@ export const DishForm: React.FC<Props> = ({ close, values }) => {
             })
 		}
 		setIsLoading(false)
+		close()
 	}
 
 	return (
@@ -82,7 +89,7 @@ export const DishForm: React.FC<Props> = ({ close, values }) => {
 						<Checkbox register={register} name="containsMilk" label="Contém leite" defaultChecked={values?.containsMilk} />
 						<Checkbox register={register} name="containsMeat" label="Contém carne" defaultChecked={values?.containsMeat} />
 					</Stack>
-					<FormButtons close={close} />
+					<Butttons close={close} />
 				</Stack>
 			</form>
 		</>
