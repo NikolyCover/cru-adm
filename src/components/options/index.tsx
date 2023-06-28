@@ -1,7 +1,7 @@
 import { MoreHoriz } from '@mui/icons-material'
 import { Button, IconButton, Popover, Stack } from '@mui/material'
 import { IOption } from '../../interfaces/option'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { theme } from '../../theme'
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 export const Options: React.FC<Props> = ({ options, datumId }) => {
 	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+	const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget)
 	}
 
@@ -21,21 +21,21 @@ export const Options: React.FC<Props> = ({ options, datumId }) => {
 	}
 
 	const onOptionClick = (opt: IOption) => {
-		handleClose()
 		opt.action(datumId)
+		setAnchorEl(null)
 	}
 
-	const open = Boolean(anchorEl)
+	const open = useMemo(() => !!anchorEl, [anchorEl])
 	const id = open ? 'options-popover' : undefined
 
 	return (
 		<>
-			<IconButton aria-label="more" onClick={handleClick}>
+			<IconButton aria-label="more" onClick={handleOpen}>
 				<MoreHoriz />
 			</IconButton>
 			<Popover
 				id={id}
-				open={open}
+				open={!!anchorEl}
 				anchorEl={anchorEl}
 				onClose={handleClose}
 				anchorOrigin={{

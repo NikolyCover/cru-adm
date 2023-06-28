@@ -10,7 +10,7 @@ import { CATEGORIES, CATEGORIES_LABELS } from '../../../consts/categories'
 import { useState } from 'react'
 import { Loading } from '../../loading'
 import { feedbackAtom } from '../../../contexts/feedback'
-import { CREATE_DISH_ERROR_MESSAGE, CREATE_DISH_SUCESS_MESSAGE } from '../../../consts/messages'
+import { CREATE_DISH_ERROR_MESSAGE, CREATE_DISH_SUCESS_MESSAGE, EDIT_DISH_ERROR_MESSAGE, EDIT_DISH_SUCESS_MESSAGE } from '../../../consts/messages'
 import { useRecoilRefresher_UNSTABLE, useRecoilState } from 'recoil'
 import { dishesSelector } from '../../../contexts/dish'
 
@@ -36,13 +36,13 @@ export const DishForm: React.FC<Props> = ({ close, values }) => {
 			values ? await updateDish({id: values.id, ...paramns}) : await createDish(paramns)
             setFeedback({
                 value: 'success',
-                message: CREATE_DISH_SUCESS_MESSAGE
+                message: values ? EDIT_DISH_SUCESS_MESSAGE : CREATE_DISH_SUCESS_MESSAGE
             })
 			refreshDishes()
 		} catch (error) {
             setFeedback({
                 value: 'error',
-                message: CREATE_DISH_ERROR_MESSAGE
+                message: values ? EDIT_DISH_ERROR_MESSAGE : CREATE_DISH_ERROR_MESSAGE
             })
 		}
 		setIsLoading(false)
@@ -70,6 +70,14 @@ export const DishForm: React.FC<Props> = ({ close, values }) => {
 							))}
 						</Select>
 					</Stack>
+					<TextField
+							{...register('description')}
+							label="Descrição"
+							error={!!errors.description}
+							helperText={errors.description?.message}
+							size="small"
+							defaultValue={values && values.description}
+						/>
 					<Stack direction="row" justifyContent="space-between" gap={2}>
 						<Checkbox register={register} name="containsMilk" label="Contém leite" defaultChecked={values?.containsMilk} />
 						<Checkbox register={register} name="containsMeat" label="Contém carne" defaultChecked={values?.containsMeat} />

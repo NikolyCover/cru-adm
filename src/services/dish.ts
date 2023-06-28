@@ -7,21 +7,9 @@ export const getDish = (id: number): Promise<AxiosResponse<Dish>> => cruAPI.get<
 export const getAllDishes = (): Promise<AxiosResponse<Dish[]>> => cruAPI.get<Dish[]>('/dishes')
 
 export const createDish = (data: DishParamns): Promise<AxiosResponse<Dish>> => {
-    const formatedData = {
-        name: data.name,
-        contains_milk: data.containsMilk,
-        contains_meat: data.containsMeat,
-        category: data.category
-    }
-    return cruAPI.post(`/dishes`, formatedData)
+	return cruAPI.post(`/dishes`, data)
 }
 
 export const updateDish = (data: Dish): Promise<AxiosResponse<Dish>> => {
-    const formatedData = {
-        name: data.name,
-        contains_milk: data.containsMilk,
-        contains_meat: data.containsMeat,
-        category: data.category
-    }
-    return cruAPI.put(`/dishes/${data.id}`, formatedData)
+	return cruAPI.put(`/dishes/${data.id}`, data)
 }

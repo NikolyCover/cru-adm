@@ -9,11 +9,14 @@ interface Props<T extends FieldValues> {
 }
 
 export function Checkbox<TProps extends FieldValues>({ register, name, label, defaultChecked }: Props<TProps>) {
+	
+	if(defaultChecked == undefined) return null
+
 	return (
 		<FormControlLabel
 			control={<MuiCheckbox color="primary" {...register(name)} />}
 			label={label}
-			defaultChecked={defaultChecked}
+			checked={defaultChecked}
 		/>
 	)
 }

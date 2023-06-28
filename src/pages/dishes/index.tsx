@@ -5,7 +5,7 @@ import { Table } from '../../components/table'
 import { TableOptions } from '../../components/table/options'
 import { Typography } from '@mui/material'
 import Modal, { ModalHandles } from '../../components/modal'
-import { useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DishForm } from '../../components/forms/dish'
 import { IOption } from '../../interfaces/option'
 
@@ -22,18 +22,19 @@ type ModalGoal = 'create' | 'edit' | 'delete'
 const DishesPage: React.FC = () => {
 	const modalRef = useRef<ModalHandles>(null)
 	const dishes = useRecoilValue(dishesAtom)
-	const [modalGoal, setModalGoal] = useState<ModalGoal>('create')
 	const [dishId, setDishId] = useState(-1)
-	const [dish, setDish] = useRecoilState(dishAtom(dishId))
+	const dish = useRecoilValue(dishAtom(dishId))
 
-	const modalTitle = modalGoal === 'create' ? 'Cadastrar' : (modalGoal === 'edit' ? 'Editar' : 'Apagar') + ' prato'
+	const [modalGoal, setModalGoal] = useState<ModalGoal>('create')
 
-    const openModal = () => modalRef.current?.open()
+	const modalTitle = useMemo(() => modalGoal === 'create' ? 'Cadastrar' : (modalGoal === 'edit' ? 'Editar' : 'Apagar') + ' prato', [modalGoal])
+
+    const openModal = useCallback(() => modalRef.current?.open(), [modalRef])
 	
 	const edit = (dishId: number) => {
 		setModalGoal('edit')
-		openModal()
 		setDishId(dishId)
+		openModal()
 	}
 
 	const del = (dishId: number) => {
@@ -41,6 +42,15 @@ const DishesPage: React.FC = () => {
 		openModal()
 		setDishId(dishId)
 	}
+
+	const handleCloseModal = () => {
+		setModalGoal('create')
+		//setDishId(-1)
+	}
+
+	useEffect(() => {
+		if(modalGoal == 'create') setDishId(-1)
+	}, [modalGoal])
 
 	const options: IOption[] = [
 		{ label: 'Editar', action: edit},
@@ -52,7 +62,7 @@ const DishesPage: React.FC = () => {
 			<Typography variant='h1' sx={{ mb: 3 }}>Pratos</Typography>
 			<TableOptions buttonLabel='Cadastrar prato' buttonOnClick={openModal} />
 			<Table headings={HEADINGS} data={dishes} options={options} />
-			<Modal ref={modalRef} title={modalTitle} actionOnClose={() => setModalGoal('create')}>
+			<Modal ref={modalRef} title={modalTitle} actionOnClose={handleCloseModal}>
                 <DishForm close={() => modalRef.current?.close()} values={dish} />
             </Modal>
 		</NavigationLayout>

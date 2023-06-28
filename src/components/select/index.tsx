@@ -14,6 +14,7 @@ interface Props<T extends FieldValues> {
 }
 
 export function Select<TProps extends FieldValues>({ register, name, label, defaultValue, children, fullWidth, width }: Props<TProps>) {
+
 	return (
 		<FormControl fullWidth={fullWidth} sx={{ width: width }}>
 			<InputLabel id="fabricationYear">{label}</InputLabel>
