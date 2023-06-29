@@ -4,9 +4,10 @@ import { theme } from '../../theme'
 interface Props {
 	close: () => void
 	type?: 'delete' | 'default'
+	onFinish?: () => void
 }
 
-export const Butttons: React.FC<Props> = ({ close, type = 'default' }) => {
+export const Butttons: React.FC<Props> = ({ close, type = 'default', onFinish }) => {
 	const onClickCancel = () => {
 		close()
 	}
@@ -16,7 +17,7 @@ export const Butttons: React.FC<Props> = ({ close, type = 'default' }) => {
 			<Button variant="text" sx={{ color: type === 'delete' ? theme.palette.cru.neutral.superDark : theme.palette.cru.blue.main }} size="large" onClick={onClickCancel}>
 				Cancelar
 			</Button>
-			<Button variant="contained" size="large" type="submit" color={type === 'delete' ? 'error' : 'primary'} >
+			<Button variant="contained" size="large" type={onFinish ? 'button' : 'submit'} color={type === 'delete' ? 'error' : 'primary'} onClick={onFinish}>
 				{type === 'delete' ? 'Apagar' : 'Finalizar'}
 			</Button>
 		</Stack>

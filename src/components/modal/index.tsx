@@ -9,7 +9,7 @@ export interface ModalHandles {
 interface Props {
     title: string
     children: ReactNode
-    actionOnClose: () => void
+    actionOnClose?: () => void
 }
 
 const Modal: React.ForwardRefRenderFunction<ModalHandles, Props> = ({ title, children, actionOnClose }, ref) => {
@@ -25,7 +25,7 @@ const Modal: React.ForwardRefRenderFunction<ModalHandles, Props> = ({ title, chi
 
     const close = () => {
         setVisible(false)
-        actionOnClose()
+        actionOnClose && actionOnClose()
 	}
 
 	return (

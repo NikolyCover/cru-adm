@@ -44,7 +44,7 @@ export const Table: React.FC<Props> = ({ headings, data, options }) => {
 							<TableCell>{toString(dish.category)}</TableCell>
 							{options && (
 								<TableCell>
-									<Actions actions={options} datumId={dish.id}/>
+									<Actions actions={options} datum={dish}/>
 								</TableCell>
 							)}
 						</TableRow>

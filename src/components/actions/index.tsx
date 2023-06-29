@@ -3,13 +3,14 @@ import { Button, IconButton, Popover, Stack } from '@mui/material'
 import { IAction } from '../../interfaces/action'
 import { useMemo, useState } from 'react'
 import { theme } from '../../theme'
+import { Dish } from '../../schemas/dish'
 
 interface Props {
 	actions: IAction[]
-	datumId: number
+	datum: Dish
 }
 
-export const Actions: React.FC<Props> = ({ actions, datumId }) => {
+export const Actions: React.FC<Props> = ({ actions, datum }) => {
 	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
 	const handleOpenPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -20,8 +21,8 @@ export const Actions: React.FC<Props> = ({ actions, datumId }) => {
 		setAnchorEl(null)
 	}
 
-	const onClick = (opt: IAction) => {
-		opt.func(datumId)
+	const onClick = (action: IAction) => {
+		action.calback(datum)
 		handleClosePopover()
 	}
 
@@ -44,9 +45,9 @@ export const Actions: React.FC<Props> = ({ actions, datumId }) => {
 				}}
 			>
 				<Stack>
-					{actions?.map((opt, index) => (
-						<Button onClick={() => onClick(opt)} key={index} sx={{ color: theme.palette.cru.neutral.superDark, width: theme.spacing(15) }}>
-							{opt.label}
+					{actions?.map((act, index) => (
+						<Button onClick={() => onClick(act)} key={index} sx={{ color: theme.palette.cru.neutral.dark, width: theme.spacing(15) }}>
+							{act.label}
 						</Button>
 					))}
 				</Stack>

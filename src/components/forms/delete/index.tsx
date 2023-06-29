@@ -26,7 +26,6 @@ export const DeleteForm: React.FC<Props> = ({ close, value }) => {
 	const submit = async () => {
 		setIsLoading(true)
 		try {
-            console.log(value.id)
 			await deleteDish(value.id)
 
 			setFeedback({
