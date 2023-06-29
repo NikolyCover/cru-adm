@@ -5,21 +5,20 @@ import { Butttons } from '../buttons'
 import { Loading } from '../loading'
 
 interface Props {
-	modalRef: React.Ref<ModalHandles>
-	close: () => void
+	modalRef: React.RefObject<ModalHandles>
 	title: string
-	OnConfirm: () => void
+	onConfirm: () => void
 	children: ReactNode
 }
 
-export const ConfirmationModal: React.FC<Props> = ({ modalRef, title, children, OnConfirm, close }) => {
+export const ConfirmationModal: React.FC<Props> = ({ modalRef, title, children, onConfirm }) => {
 	const [isLoading, setIsLoading] = useState(false)
 
-	const onFinish = () => {
+	const onFinish =  async () => {
 		setIsLoading(true)
-		OnConfirm()
-		close()
+		await onConfirm()
 		setIsLoading(false)
+		modalRef.current?.close()
 	}
 
 	return (
@@ -27,7 +26,7 @@ export const ConfirmationModal: React.FC<Props> = ({ modalRef, title, children, 
 			<Loading open={isLoading} />
 			<Modal ref={modalRef} title={title}>
 				<Typography>{children}</Typography>
-				<Butttons type="delete" close={close} onFinish={onFinish} />
+				<Butttons type="delete" close={() => modalRef.current?.close()} onFinish={onFinish} />
 			</Modal>
 		</>
 	)

@@ -2,63 +2,71 @@ import { useForm } from 'react-hook-form'
 import { Butttons } from '../../buttons'
 import { Dish, DishParamns, DishParamnsSchema } from '../../../schemas/dish'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createDish, updateDish } from '../../../services/dish'
 import { MenuItem, Stack, TextField } from '@mui/material'
 import { Checkbox } from '../../checkbox'
 import { Select } from '../../select'
 import { CATEGORIES, CATEGORIES_LABELS } from '../../../consts/categories'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Loading } from '../../loading'
-import { feedbackAtom } from '../../../contexts/feedback'
-import { CREATE_DISH_ERROR_MESSAGE, CREATE_DISH_SUCESS_MESSAGE, EDIT_DISH_ERROR_MESSAGE, EDIT_DISH_SUCESS_MESSAGE } from '../../../consts/messages'
-import { useRecoilRefresher_UNSTABLE, useRecoilState } from 'recoil'
-import { dishesSelector } from '../../../contexts/dish'
+import Modal, { ModalHandles } from '../../modal'
+import { useDish } from '../../../hooks/dish'
 
 interface Props {
-	close: () => void
+	modalRef: React.RefObject<ModalHandles>
 	dish?: Dish
+	onClose: () => void
 }
 
-export const DishForm: React.FC<Props> = ({ close, dish }) => {
+export const DishForm: React.FC<Props> = ({ modalRef, dish, onClose }) => {
 	const [isLoading, setIsLoading] = useState(false)
-    const [, setFeedback] = useRecoilState(feedbackAtom)
-	const refreshDishes = useRecoilRefresher_UNSTABLE(dishesSelector)
+
+	const { createDish, updateDish } = useDish()
+
+	const closeModal = () => {
+		onClose()
+		modalRef.current?.close()
+	}
 
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
-	} = useForm<DishParamns>({ resolver: zodResolver(DishParamnsSchema) })
+	} = useForm<DishParamns>({ 
+		defaultValues: dish, 
+		resolver: zodResolver(DishParamnsSchema) 
+	})
 
-	const submit = async (paramns: DishParamns ) => {
+	const onSubmit = async (params: DishParamns) => {
 		setIsLoading(true)
-		try {
-			if(!!dish) {
-				await updateDish({id: dish.id, ...paramns})
-			} else {
-				await createDish(paramns)
-			}
 
-            setFeedback({
-                value: 'success',
-                message: dish ? EDIT_DISH_SUCESS_MESSAGE : CREATE_DISH_SUCESS_MESSAGE
-            })
-
-			refreshDishes()
-		} catch (error) {
-            setFeedback({
-                value: 'error',
-                message: dish ? EDIT_DISH_ERROR_MESSAGE : CREATE_DISH_ERROR_MESSAGE
-            })
+		if (dish) {
+			await updateDish(params, dish.id)
+		} else {
+			await createDish(params)
 		}
+
+		
+		closeModal()
 		setIsLoading(false)
-		close()
 	}
 
+	useEffect(() => {
+		if(dish){
+			Object.entries(dish).forEach(([ key, value ]) => {
+				setValue(key as keyof DishParamns, value as string | boolean)
+			})
+		}
+	}, [ dish ])
+
 	return (
-		<>
+		<Modal 
+			ref={modalRef} 
+			title={(dish ? 'Editar' : 'Cadastrar') + 'Prato'}
+
+		>
 			<Loading open={isLoading} />
-			<form onSubmit={handleSubmit(submit)}>
+			<form onSubmit={handleSubmit(onSubmit)}>
 				<Stack gap={2} sx={{ mt: '5px' }}>
 					<Stack direction="row" gap={2}>
 						<TextField
@@ -67,9 +75,13 @@ export const DishForm: React.FC<Props> = ({ close, dish }) => {
 							error={!!errors.name}
 							helperText={errors.name?.message}
 							size="small"
-							defaultValue={dish && dish.name}
 						/>
-						<Select register={register} name="category" label="Categoria" defaultValue={dish ? dish.category : CATEGORIES[0]}>
+						<Select
+							register={register}
+							name="category"
+							label="Categoria"
+							defaultValue={dish ? dish.category : CATEGORIES[0]}
+						>
 							{CATEGORIES.map((category, index) => (
 								<MenuItem key={index} value={category}>
 									{CATEGORIES_LABELS[category]}
@@ -78,20 +90,30 @@ export const DishForm: React.FC<Props> = ({ close, dish }) => {
 						</Select>
 					</Stack>
 					<TextField
-							{...register('description')}
-							label="Descrição"
-							error={!!errors.description}
-							helperText={errors.description?.message}
-							size="small"
-							defaultValue={dish && dish.description}
-						/>
+						{...register('description')}
+						label="Descrição"
+						error={!!errors.description}
+						helperText={errors.description?.message}
+						size="small"
+						defaultValue={dish && dish.description}
+					/>
 					<Stack direction="row" justifyContent="space-between" gap={2}>
-						<Checkbox register={register} name="containsMilk" label="Contém leite" defaultChecked={!!dish?.containsMilk} />
-						<Checkbox register={register} name="containsMeat" label="Contém carne" defaultChecked={!!dish?.containsMeat} />
+						<Checkbox
+							register={register}
+							name="containsMilk"
+							label="Contém leite"
+							defaultChecked={!!dish?.containsMilk}
+						/>
+						<Checkbox
+							register={register}
+							name="containsMeat"
+							label="Contém carne"
+							defaultChecked={!!dish?.containsMeat}
+						/>
 					</Stack>
-					<Butttons close={close} />
+					<Butttons close={closeModal} />
 				</Stack>
 			</form>
-		</>
+		</Modal>
 	)
 }

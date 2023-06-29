@@ -5,12 +5,12 @@ import { Table } from '../../components/table'
 import { TableOptions } from '../../components/table/options'
 import { Typography } from '@mui/material'
 import { ModalHandles } from '../../components/modal'
-import { useCallback, useRef, useState } from 'react'
-import { DishForm } from '../../components/forms/dish'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { IAction } from '../../interfaces/action'
 import { Dish } from '../../schemas/dish'
 import { ConfirmationModal } from '../../components/confirmation-modal'
 import { useDish } from '../../hooks/dish'
+import { DishForm } from '../../components/forms/dish'
 
 const HEADINGS = ['Nome', 'Descrição', 'Contém leite', 'Contém carne', 'Categoria']
 
@@ -21,15 +21,19 @@ const DishesPage: React.FC = () => {
 	const { deleteDish } = useDish()
 
 	const deleteModalRef = useRef<ModalHandles>(null)
-	const formModalRef = useRef<ModalHandles>(null)
+	const createModalRef = useRef<ModalHandles>(null)
+	const editModalRef = useRef<ModalHandles>(null)
 
-	const openFormModal = useCallback(() => formModalRef.current?.open(), [formModalRef])
+	const openCreateModal = useCallback(() => createModalRef.current?.open(), [createModalRef])
 
 	const openDeleteModal = useCallback(() => deleteModalRef.current?.open(), [deleteModalRef])
-	const closeDeleteModal = useCallback(() => deleteModalRef.current?.close(), [deleteModalRef])
 
-	const editAction = (dish: Dish) => {
-		setDish(dish)
+	const editAction = (selectedDish: Dish) => {
+		if(dish?.id == selectedDish.id){
+			return editModalRef.current?.open()
+		}
+
+		setDish(selectedDish)
 	}
 
 	const deleteAction = (dish: Dish) => {
@@ -46,33 +50,35 @@ const DishesPage: React.FC = () => {
 		if (dish) await deleteDish(dish.id)
 	}
 
+	// useEffect(() => {
+	// 	if(dish !== null){
+	// 		return editModalRef.current?.open()			
+	// 	}
+
+	// 	return editModalRef.current?.close()
+	// }, [ dish ])
+
 	return (
 		<>
 			<NavigationLayout>
 				<Typography variant="h1" sx={{ mb: 3 }}>
 					Pratos
 				</Typography>
-				<TableOptions buttonLabel="Cadastrar prato" buttonOnClick={openFormModal} />
+				<TableOptions buttonLabel="Cadastrar prato" buttonOnClick={openCreateModal} />
 				<Table headings={HEADINGS} data={dishes} options={options} />
-				{/* <Modal ref={modalRef} title={modalTitle}>
-					{modalGoal === 'delete' && dish ? (
-						<DeleteForm close={closeModal} value={dish} />
-					) : (
-						<DishForm close={closeModal} dish={dish} />
-					)}
-				</Modal> */}
 			</NavigationLayout>
+
+			<DishForm modalRef={createModalRef} onClose={console.log} />
+
+			{ dish && <DishForm modalRef={editModalRef} dish={dish} onClose={() => setDish(null)}/> }
 
 			<ConfirmationModal
 				modalRef={deleteModalRef}
 				title="Apagar Prato"
-				OnConfirm={onDelete}
-				close={closeDeleteModal}
+				onConfirm={onDelete}
 			>
-				Você tem certeza que deseja apagar o prato?
+				Você tem certeza que deseja apagar o prato {dish?.name} ?
 			</ConfirmationModal>
-
-			{/* <DishesForm modalRef={ref} {...(dishId && { dishId })} /> */}
 		</>
 	)
 }
