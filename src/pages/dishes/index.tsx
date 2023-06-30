@@ -5,7 +5,7 @@ import { Table } from '../../components/table'
 import { TableOptions } from '../../components/table/options'
 import { Typography } from '@mui/material'
 import { ModalHandles } from '../../components/modal'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { IAction } from '../../interfaces/action'
 import { Dish } from '../../schemas/dish'
 import { ConfirmationModal } from '../../components/confirmation-modal'
@@ -25,7 +25,6 @@ const DishesPage: React.FC = () => {
 	const editModalRef = useRef<ModalHandles>(null)
 
 	const openCreateModal = useCallback(() => createModalRef.current?.open(), [createModalRef])
-
 	const openDeleteModal = useCallback(() => deleteModalRef.current?.open(), [deleteModalRef])
 
 	const editAction = (selectedDish: Dish) => {
@@ -49,14 +48,6 @@ const DishesPage: React.FC = () => {
 	const onDelete = async () => {
 		if (dish) await deleteDish(dish.id)
 	}
-
-	// useEffect(() => {
-	// 	if(dish !== null){
-	// 		return editModalRef.current?.open()			
-	// 	}
-
-	// 	return editModalRef.current?.close()
-	// }, [ dish ])
 
 	return (
 		<>

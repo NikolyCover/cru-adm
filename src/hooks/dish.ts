@@ -1,18 +1,27 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { feedbackAtom } from '../contexts/feedback'
-import { CREATE_DISH_ERROR_MESSAGE, CREATE_DISH_SUCESS_MESSAGE, DELETE_DISH_ERROR_MESSAGE, DELETE_DISH_SUCESS_MESSAGE, EDIT_DISH_ERROR_MESSAGE, EDIT_DISH_SUCESS_MESSAGE } from '../consts/messages'
+import {
+	CREATE_DISH_ERROR_MESSAGE,
+	CREATE_DISH_SUCESS_MESSAGE,
+	DELETE_DISH_ERROR_MESSAGE,
+	DELETE_DISH_SUCESS_MESSAGE,
+	EDIT_DISH_ERROR_MESSAGE,
+	EDIT_DISH_SUCESS_MESSAGE,
+} from '../consts/messages'
 import { AxiosError } from 'axios'
 import { createDish, deleteDish, updateDish } from '../services/dish'
 import { DishParamns } from '../schemas/dish'
 import { dishesAtom } from '../contexts/dish'
 
 export const useDish = () => {
-    const [ dishes, setDishes ] = useRecoilState(dishesAtom)
+	const setDishes = useSetRecoilState(dishesAtom)
 	const setFeedback = useSetRecoilState(feedbackAtom)
 
 	const del = async (id: number) => {
 		try {
 			await deleteDish(id)
+
+			setDishes((dishes) => [...dishes.filter((dish) => dish.id !== id)])
 
 			setFeedback({
 				value: 'success',
@@ -30,7 +39,7 @@ export const useDish = () => {
 		try {
 			const { data } = await createDish(paramns)
 
-            setDishes(dishes => ([ ...dishes, data ]))
+			setDishes((dishes) => [...dishes, data])
 
 			setFeedback({
 				value: 'success',
@@ -44,11 +53,11 @@ export const useDish = () => {
 		}
 	}
 
-    const update = async (params: DishParamns, id: number) => {
+	const update = async (params: DishParamns, id: number) => {
 		try {
-			await updateDish(params, id)
+			const { data } = await updateDish(params, id)
 
-            //setDishes(dishes =>)
+			setDishes((dishes) => [...(dishes.filter((dish) => dish.id !== id)), data].sort((a, b) => a.id - b.id))
 
 			setFeedback({
 				value: 'success',
@@ -64,7 +73,7 @@ export const useDish = () => {
 
 	return {
 		deleteDish: del,
-        createDish: create,
-        updateDish: update
+		createDish: create,
+		updateDish: update,
 	}
 }
