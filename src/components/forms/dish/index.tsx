@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { MenuItem, Stack, TextField } from '@mui/material'
 import { Checkbox } from '../../checkbox'
 import { Select } from '../../select'
-import { CATEGORIES, CATEGORIES_LABELS } from '../../../consts/categories'
+import { CATEGORIES, CATEGORIES_LABELS } from '../../../constants/categories'
 import { useEffect, useState } from 'react'
 import { Loading } from '../../loading'
 import Modal, { ModalHandles } from '../../modal'
@@ -46,7 +46,6 @@ export const DishForm: React.FC<Props> = ({ modalRef, dish, onClose }) => {
 			await createDish(params)
 		}
 
-		
 		closeModal()
 		setIsLoading(false)
 	}

@@ -4,3 +4,4 @@ export const EDIT_DISH_SUCESS_MESSAGE = 'Alterações no prato feitas com sucess
 export const EDIT_DISH_ERROR_MESSAGE = 'Ocorreu um erro na requisão. Portanto, o prato não foi alterado! Erro: '
 export const DELETE_DISH_SUCESS_MESSAGE = 'Prato apagado com sucesso!'
 export const DELETE_DISH_ERROR_MESSAGE = 'Ocorreu um erro na requisão. Portanto, o prato não foi apagado! Erro: '
+export const DELETE_DISH_REGISTERED_IN_MENU_MESSAGE = 'O prato está cadastrado em um cardápio. Portanto não pode ser apagado!'

@@ -1,4 +1,4 @@
-import { CATEGORIES, CATEGORIES_LABELS } from '../consts/categories'
+import { CATEGORIES, CATEGORIES_LABELS } from '../constants/categories'
 import { Category } from '../schemas/dish'
 
 export const isCategory = (value: unknown): value is Category => {

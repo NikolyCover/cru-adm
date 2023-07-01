@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { CATEGORIES } from '../consts/categories'
+import { CATEGORIES } from '../constants/categories'
 export type Category = typeof CATEGORIES[number]
 
 export const DishSchema = z.object({

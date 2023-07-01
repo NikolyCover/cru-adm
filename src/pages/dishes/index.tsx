@@ -65,10 +65,10 @@ const DishesPage: React.FC = () => {
 
 			<ConfirmationModal
 				modalRef={deleteModalRef}
-				title="Apagar Prato"
+				title={`Apagar ${dish?.name}`}
 				onConfirm={onDelete}
 			>
-				Você tem certeza que deseja apagar o prato {dish?.name} ?
+				Você tem certeza que deseja apagar o prato? Se ele estiver cadastrado em algum cardápio essa ação não irá ser realizada!
 			</ConfirmationModal>
 		</>
 	)

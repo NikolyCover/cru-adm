@@ -4,10 +4,11 @@ import {
 	CREATE_DISH_ERROR_MESSAGE,
 	CREATE_DISH_SUCESS_MESSAGE,
 	DELETE_DISH_ERROR_MESSAGE,
+	DELETE_DISH_REGISTERED_IN_MENU_MESSAGE,
 	DELETE_DISH_SUCESS_MESSAGE,
 	EDIT_DISH_ERROR_MESSAGE,
 	EDIT_DISH_SUCESS_MESSAGE,
-} from '../consts/messages'
+} from '../constants/messages'
 import { AxiosError } from 'axios'
 import { createDish, deleteDish, updateDish } from '../services/dish'
 import { DishParamns } from '../schemas/dish'
@@ -19,14 +20,21 @@ export const useDish = () => {
 
 	const del = async (id: number) => {
 		try {
-			await deleteDish(id)
+			const { data } = await deleteDish(id)
 
-			setDishes((dishes) => [...dishes.filter((dish) => dish.id !== id)])
+			if(!data) {
+				setFeedback({
+					value: 'error',
+					message: DELETE_DISH_REGISTERED_IN_MENU_MESSAGE,
+				})
+			} else {
+				setDishes((dishes) => [...dishes.filter((dish) => dish.id !== id)])
 
-			setFeedback({
-				value: 'success',
-				message: DELETE_DISH_SUCESS_MESSAGE,
-			})
+				setFeedback({
+					value: 'success',
+					message: DELETE_DISH_SUCESS_MESSAGE,
+				})
+			}
 		} catch (error) {
 			setFeedback({
 				value: 'error',
