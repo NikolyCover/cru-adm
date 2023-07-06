@@ -1,6 +1,6 @@
 import { Stack } from '@mui/system'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { Calendar as BigCalendar, momentLocalizer } from 'react-big-calendar'
+import { Calendar as BigCalendar, Event, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import { theme } from '../../theme'
 
