@@ -20,7 +20,7 @@ export const ViewLayout: React.FC<Props> = ({ children, goBack, title }) => {
 		<>
 			<Stack direction="row" alignItems="center" sx={{ mb: 3 }}>
 				{goBack && (
-					<IconButton onClick={onGoBack}>
+					<IconButton onClick={onGoBack} color='primary'>
 						<ArrowBack />
 					</IconButton>
 				)}

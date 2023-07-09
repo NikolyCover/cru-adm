@@ -1,7 +1,6 @@
 import { z } from 'zod'
 import { CATEGORIES } from '../constants/categories'
-
-const REQUIRED_MESSAGE = 'O campo é obrigatório'
+import { REQUIRED_MESSAGE } from '../constants/messages'
 
 export const DishParamnsSchema = z.object({
     name: z.string().min(1, REQUIRED_MESSAGE),

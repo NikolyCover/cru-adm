@@ -61,7 +61,7 @@ export const DishForm: React.FC<Props> = ({ modalRef, dish, onClose }) => {
 	return (
 		<Modal 
 			ref={modalRef} 
-			title={(dish ? 'Editar' : 'Cadastrar') + 'Prato'}
+			title={`${dish ? 'Editar' : 'Cadastrar'} Prato`}
 
 		>
 			<Loading open={isLoading} />
