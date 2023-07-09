@@ -1,14 +1,13 @@
 import { useForm } from 'react-hook-form'
 import { Butttons } from '../../buttons'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { Loading } from '../../loading'
 import Modal, { ModalHandles } from '../../modals/modal'
-import { Menu, MenuParamns, MenuParamsSchema } from '../../../schemas/menu'
+import { Menu, MenuParamns } from '../../../schemas/menu'
 import { useMenus } from '../../../hooks/menu'
 import { Stack } from '@mui/material'
 import { useState } from 'react'
 import { formatDate } from '../../../utils/format-date'
-import { ControlledInput } from '../../controlled-input'
+import { DishesInput } from '../../dishes-select'
 
 interface Props {
 	modalRef: React.RefObject<ModalHandles>
@@ -25,16 +24,11 @@ export const MenuForm: React.FC<Props> = ({ modalRef, menu, date }) => {
 		modalRef.current?.close()
 	}
 
-	const {
-		control,
-		handleSubmit,
-		setValue,
-		formState: { errors },
-	} = useForm<MenuParamns>({
+	const { control, handleSubmit } = useForm<MenuParamns>({
 		defaultValues: {
-		    dishesIds: [] //menu?.organizedDishes.map((datum) => datum.dishes.)
+			dishesIds: [],
 		},
-		resolver: zodResolver(MenuParamsSchema),
+		//resolver: zodResolver(MenuParamsSchema),
 	})
 
 	const onSubmit = async (params: MenuParamns) => {
@@ -42,7 +36,7 @@ export const MenuForm: React.FC<Props> = ({ modalRef, menu, date }) => {
 
 		if (menu) {
 			await updateMenu(params, menu.id)
-		} else if(date) {
+		} else if (date) {
 			await createMenu(params, date)
 		}
 
@@ -50,18 +44,15 @@ export const MenuForm: React.FC<Props> = ({ modalRef, menu, date }) => {
 		setIsLoading(false)
 	}
 
-    console.log(errors)
-
 	return (
 		<Modal ref={modalRef} title={`${menu ? 'Editar' : 'Cadastrar'} Cardápio ${date && `em ${formatDate(date)}`}`}>
 			<Loading open={isLoading} />
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<Stack gap={2} sx={{ mt: '5px' }}>
-					<ControlledInput
-						control={control}
-						name="dishesIds"
-						select
-                        multiple
+				<Stack gap={2}>
+					<DishesInput
+                        control={control}
+                        name='dishesIds'
+                        defaultValue={{ value: -1 }}
 						items={dishes.map((dish) => ({
 							label: dish.name,
 							value: dish.id,

@@ -1,4 +1,4 @@
-import { Box, Checkbox, Chip, FormControlLabel, MenuItem, Radio, Stack, TextField, TextFieldProps } from '@mui/material'
+import { Checkbox, FormControlLabel, MenuItem, TextField, TextFieldProps } from '@mui/material'
 import { Control, Path, useController } from 'react-hook-form'
 import { Item } from '../../interfaces/item'
 import { theme } from '../../theme'
@@ -60,7 +60,6 @@ export function ControlledInput<T extends object>({
 			{...field}
 			{...inputProps}
 			error={!!error}
-			//{...(inputProps.type == 'number' && { onChange: (e) => field.onChange(+e.target.value) })}
 			{...(!!error && { helperText: error.message as string })}
 			select={select}
 			SelectProps={{ multiple, MenuProps: { PaperProps: { sx: { maxHeight: theme.spacing(20) } } } }}

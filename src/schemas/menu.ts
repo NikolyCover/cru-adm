@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { OrganizedDishesSchema } from './organized-dishes'
 
 export const MenuParamsSchema = z.object({
-    dishesIds: z.number().array()
+    dishesIds: z.object({ value: z.number() }).array()
 })
 
 export type MenuParamns = z.output<typeof MenuParamsSchema>
