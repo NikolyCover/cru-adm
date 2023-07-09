@@ -6,9 +6,11 @@ import { getDishesByCategory } from '../../utils/dishes-by-category'
 import { Stack } from '@mui/material'
 import { ViewLayout } from '../../layouts/view'
 import { formatDate } from '../../utils/format-date'
+import { useParams } from 'react-router-dom'
 
 const MenuDetails: React.FC = () => {
-	const menu = useRecoilValue(menuAtom)
+	const { id } = useParams()
+	const menu = useRecoilValue(menuAtom(Number(id)))
 
 	if (!menu) {
 		return null

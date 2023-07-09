@@ -6,8 +6,6 @@ import { theme } from '../../theme'
 import { useCallback } from 'react'
 import { Menu } from '../../schemas/menu'
 import { useNavigate } from 'react-router-dom'
-import { useSetRecoilState } from 'recoil'
-import { menuAtom } from '../../contexts/menu'
 
 interface Props {
     events: Event[]
@@ -17,15 +15,12 @@ export const Calendar: React.FC<Props> = ({ events }) => {
 	const localizer = momentLocalizer(moment)
 	const navigate = useNavigate()
 
-	const setMenu = useSetRecoilState(menuAtom)
-
 	const handleSelectSlot = () => {
 		console.log('onSlot')
 	}
 
 	const handleSelectEvent = useCallback((event: Event) => {
 		const menu = event.resource as Menu
-		setMenu(menu)
 		navigate(`${menu.id}`)
 	}, [])
 
