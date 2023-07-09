@@ -10,9 +10,9 @@ export const getAllMenus = (): Promise<AxiosResponse<Menu[]>> => (
     cruAPI.get('/menus')
 )
 
-export const createMenu = (data: MenuParamns): Promise<AxiosResponse<Menu>> => {
+export const createMenu = (data: MenuParamns, date: Date): Promise<AxiosResponse<Menu>> => {
 	return cruAPI.post(`/menus`, {
-        date: data.date,
+        date: date,
         dishes_ids: data.dishesIds
     })
 }

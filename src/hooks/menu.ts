@@ -1,4 +1,4 @@
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { menusAtom } from '../contexts/menu'
 import { Event } from 'react-big-calendar'
 import { MenuParamns } from '../schemas/menu'
@@ -7,9 +7,11 @@ import { feedbackAtom } from '../contexts/feedback'
 import { CREATE_MENU_ERROR_MESSAGE, CREATE_MENU_SUCESS_MESSAGE, EDIT_MENU_ERROR_MESSAGE, EDIT_MENU_SUCESS_MESSAGE } from '../constants/messages'
 import { AxiosError } from 'axios'
 import { HTTPStatus } from '../interfaces/http-status'
+import { dishesAtom } from '../contexts/dish'
 
 export const useMenus = () => {
 	const [menus, setMenus] = useRecoilState(menusAtom)
+	const dishes = useRecoilValue(dishesAtom)
 
 	const setFeedback = useSetRecoilState(feedbackAtom)
 
@@ -22,9 +24,9 @@ export const useMenus = () => {
 		resource: menu
 	}))
 
-	const create = async (paramns: MenuParamns) => {
+	const create = async (paramns: MenuParamns, date: Date) => {
 		try {
-			const { data } = await createMenu(paramns)
+			const { data } = await createMenu(paramns, date)
 
 			setMenus((menus) => [...menus, data])
 
@@ -62,5 +64,6 @@ export const useMenus = () => {
 		events,
 		createMenu: create,
 		updateMenu: update,
+		dishes
 	}
 }

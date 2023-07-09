@@ -1,13 +1,11 @@
 import { NavigationLayout } from '../../layouts/navigation'
 import { Calendar } from '../../components/calendar'
-import { useMenus } from '../../hooks/menus'
+import { useMenus } from '../../hooks/menu'
 import { ViewLayout } from '../../layouts/view'
 import { useCallback, useRef, useState } from 'react'
 import { ModalHandles } from '../../components/modals/modal'
 import { MenuForm } from '../../components/forms/menu'
 import { SlotInfo } from 'react-big-calendar'
-import { Menu } from '../../schemas/menu'
-
 const MenusPage: React.FC = () => {
 	const { events } = useMenus()
 
@@ -28,7 +26,7 @@ const MenusPage: React.FC = () => {
 				</ViewLayout>
 			</NavigationLayout>
 
-			<MenuForm modalRef={createModalRef} date={date} />
+			<MenuForm modalRef={createModalRef} date={date ?? undefined} />
 		</>
 	)
 }

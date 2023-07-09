@@ -2,7 +2,6 @@ import { z } from 'zod'
 import { OrganizedDishesSchema } from './organized-dishes'
 
 export const MenuParamsSchema = z.object({
-    date: z.date().optional(),
     dishesIds: z.number().array()
 })
 
