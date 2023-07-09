@@ -7,10 +7,11 @@ import { Dish } from '../../schemas/dish'
 
 interface Props {
 	actions: IAction[]
-	datum: Dish
+	datum?: Dish
+	white?: true
 }
 
-export const Actions: React.FC<Props> = ({ actions, datum }) => {
+export const Actions: React.FC<Props> = ({ actions, datum, white }) => {
 	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
 	const handleOpenPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -31,7 +32,7 @@ export const Actions: React.FC<Props> = ({ actions, datum }) => {
 
 	return (
 		<>
-			<IconButton aria-label="more" onClick={handleOpenPopover}>
+			<IconButton aria-label="more" onClick={handleOpenPopover} color={white ? 'primary' : 'default' }>
 				<MoreHoriz />
 			</IconButton>
 			<Popover
@@ -45,8 +46,8 @@ export const Actions: React.FC<Props> = ({ actions, datum }) => {
 				}}
 			>
 				<Stack>
-					{actions?.map((act, index) => (
-						<Button onClick={() => onClick(act)} key={index} sx={{ color: theme.palette.cru.neutral.dark, width: theme.spacing(15) }}>
+					{actions?.map((act) => (
+						<Button onClick={() => onClick(act)} key={act.label} sx={{ color: theme.palette.cru.neutral.dark, width: theme.spacing(15) }}>
 							{act.label}
 						</Button>
 					))}

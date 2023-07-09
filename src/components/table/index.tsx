@@ -28,8 +28,8 @@ export const Table: React.FC<Props> = ({ headings, data, options }) => {
 			<TableWrapper>
 				<TableHead>
 					<TableRow>
-						{headings.map((heading, index) => (
-							<TableCell key={index}>{heading}</TableCell>
+						{headings.map((heading) => (
+							<TableCell key={heading}>{heading}</TableCell>
 						))}
 						{options && <TableCell></TableCell>}
 					</TableRow>

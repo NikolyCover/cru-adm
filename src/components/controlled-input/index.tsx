@@ -65,8 +65,8 @@ export function ControlledInput<T extends object>({
 			SelectProps={{ multiple, MenuProps: { PaperProps: { sx: { maxHeight: theme.spacing(20) } } } }}
 			sx={{ width: '100%' }}
 		>
-			{items?.map((item, index) => (
-				<MenuItem value={item.value} key={index}>
+			{items?.map((item) => (
+				<MenuItem value={item.value} key={item.value}>
 					{item.label}
 				</MenuItem>
 			))}

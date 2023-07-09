@@ -40,10 +40,10 @@ const DishesPage: React.FC = () => {
 		openDeleteModal()
 	}
 
-	const options: IAction[] = [
+	const options = [
 		{ label: 'Editar', calback: editAction },
 		{ label: 'Excluir', calback: deleteAction },
-	]
+	] as IAction[]
 
 	const onDelete = async () => {
 		if (dish) await deleteDish(dish.id)
@@ -62,7 +62,7 @@ const DishesPage: React.FC = () => {
 
 			{dish && <DishForm modalRef={editModalRef} dish={dish} onClose={() => setDish(null)} />}
 
-			<ConfirmationModal modalRef={deleteModalRef} title={`Apagar ${dish?.name}`} onConfirm={onDelete}>
+			<ConfirmationModal modalRef={deleteModalRef} title={`Apagar ${dish?.name}?`} onConfirm={onDelete}>
 				Você tem certeza que deseja apagar o prato? Se ele estiver cadastrado em algum cardápio essa ação não
 				irá ser realizada!
 			</ConfirmationModal>

@@ -2,9 +2,9 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { menusAtom } from '../contexts/menu'
 import { Event } from 'react-big-calendar'
 import { MenuParamns } from '../schemas/menu'
-import { createMenu, updateMenu } from '../services/menu'
+import { createMenu, deleteMenu, updateMenu } from '../services/menu'
 import { feedbackAtom } from '../contexts/feedback'
-import { CREATE_MENU_ERROR_MESSAGE, CREATE_MENU_SUCESS_MESSAGE, EDIT_MENU_ERROR_MESSAGE, EDIT_MENU_SUCESS_MESSAGE } from '../constants/messages'
+import { CREATE_MENU_ERROR_MESSAGE, CREATE_MENU_SUCESS_MESSAGE, DELETE_MENU_ERROR_MESSAGE, DELETE_MENU_SUCESS_MESSAGE, EDIT_MENU_ERROR_MESSAGE, EDIT_MENU_SUCESS_MESSAGE } from '../constants/messages'
 import { AxiosError } from 'axios'
 import { HTTPStatus } from '../interfaces/http-status'
 import { dishesAtom } from '../contexts/dish'
@@ -60,10 +60,29 @@ export const useMenus = () => {
 		}
 	}
 
+	const del = async (id: number) => {
+		try {
+			await deleteMenu(id)
+
+			setMenus((menus) => [...menus.filter((menu) => menu.id !== id)])
+
+			setFeedback({
+				value: 'success',
+				message: DELETE_MENU_SUCESS_MESSAGE,
+			})
+		} catch (error) {
+			setFeedback({
+				value: 'error',
+				message: (error as AxiosError<HTTPStatus>).response?.data.message ?? DELETE_MENU_ERROR_MESSAGE,
+			})
+		}
+	}
+
 	return {
 		events,
 		createMenu: create,
 		updateMenu: update,
+		deleteMenu: del,
 		dishes
 	}
 }

@@ -5,9 +5,9 @@ import Modal, { ModalHandles } from '../../modals/modal'
 import { Menu, MenuParamns } from '../../../schemas/menu'
 import { useMenus } from '../../../hooks/menu'
 import { Stack } from '@mui/material'
-import { useEffect, useState } from 'react'
 import { formatDate } from '../../../utils/format-date'
 import { DishesInput } from '../../dishes-select'
+import { useState } from 'react'
 
 interface Props {
 	modalRef: React.RefObject<ModalHandles>

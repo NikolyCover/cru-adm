@@ -81,8 +81,8 @@ export const DishForm: React.FC<Props> = ({ modalRef, dish, onClose }) => {
 							label="Categoria"
 							defaultValue={dish ? dish.category : CATEGORIES[0]}
 						>
-							{CATEGORIES.map((category, index) => (
-								<MenuItem key={index} value={category}>
+							{CATEGORIES.map((category) => (
+								<MenuItem key={category} value={category}>
 									{CATEGORIES_LABELS[category]}
 								</MenuItem>
 							))}

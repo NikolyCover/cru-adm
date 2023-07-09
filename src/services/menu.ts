@@ -22,3 +22,7 @@ export const updateMenu = (data: MenuParamns, id: number): Promise<AxiosResponse
         dishes_ids: data.dishesIds
     })
 }
+
+export const deleteMenu = (id: number): Promise<AxiosResponse<Menu>> => {
+	return cruAPI.delete(`/menus/${id}`)
+}
