@@ -1,8 +1,8 @@
 import { ReactNode, useState } from 'react'
 import Modal, { ModalHandles } from '../modal'
 import { Typography } from '@mui/material'
-import { Butttons } from '../buttons'
-import { Loading } from '../loading'
+import { Butttons } from '../../buttons'
+import { Loading } from '../../loading'
 
 interface Props {
 	modalRef: React.RefObject<ModalHandles>

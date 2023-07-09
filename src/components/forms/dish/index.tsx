@@ -8,7 +8,7 @@ import { Select } from '../../select'
 import { CATEGORIES, CATEGORIES_LABELS } from '../../../constants/categories'
 import { useEffect, useState } from 'react'
 import { Loading } from '../../loading'
-import Modal, { ModalHandles } from '../../modal'
+import Modal, { ModalHandles } from '../../modals/modal'
 import { useDish } from '../../../hooks/dish'
 
 interface Props {

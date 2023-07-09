@@ -10,7 +10,8 @@ export const useMenus = () => {
 		title: 'Cardápio',
 		allDay: true,
 		start: new Date(menu.date),
-		end: new Date(menu.date)
+		end: new Date(menu.date),
+		resource: menu
 	}))
 
 	return {

@@ -44,8 +44,14 @@ export const theme = createTheme({
 		fontFamily: ['Fredoka'].join(','),
 		h1: {
 			fontSize: 32,
-			color: '#FFF'
-		}
+			color: '#FFF',
+		},
+		h2: {
+			fontSize: 20,
+			fontWeight: '500',
+			color: '#FFF',
+			marginBottom: 16
+		},
 	},
 	components: {
 		MuiButton: {
@@ -118,6 +124,12 @@ export const theme = createTheme({
 				},
 			},
 		},
-
+		MuiIconButton: {
+			styleOverrides: {
+				root: {
+					color: '#FFF'
+				}
+			}
+		}
 	}
 })
