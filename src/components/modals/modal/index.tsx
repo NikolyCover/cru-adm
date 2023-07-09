@@ -29,7 +29,7 @@ const Modal: React.ForwardRefRenderFunction<ModalHandles, Props> = ({ title, chi
 	}
 
 	return (
-		<Dialog open={visible} onClose={close}>
+		<Dialog open={visible} onClose={close} maxWidth={false}>
 			<DialogTitle sx={{ px: 3, pt: 3, pb: 2 }} >{title}</DialogTitle>
             <DialogContent sx={{ py: 0, px: 3}}>
                 {children}
