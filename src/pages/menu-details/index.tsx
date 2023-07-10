@@ -22,6 +22,7 @@ const MenuDetails: React.FC = () => {
 
 	const navigate = useNavigate()
 
+
 	if (!menu) {
 		return null
 	}
