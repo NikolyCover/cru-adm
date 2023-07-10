@@ -32,6 +32,7 @@ const CRU_COLORS = {
 		dark: '#2B2626'
 	},
 	red: {
+		light: '#DC6C4B',
 		main: '#f44336'
 	}
 }
@@ -86,6 +87,12 @@ export const theme = createTheme({
 					props: { color: 'error' },
 					style: {
 						backgroundColor: `${CRU_COLORS.red.main} !important`,
+					}
+				},
+				{
+					props: { color: 'secondary' },
+					style: {
+						backgroundColor: `${CRU_COLORS.red.light} !important`,
 					}
 				}
 			],
