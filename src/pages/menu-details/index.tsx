@@ -1,6 +1,4 @@
 import { NavigationLayout } from '../../layouts/navigation'
-import { useRecoilValue } from 'recoil'
-import { menuAtom } from '../../contexts/menu'
 import { DishCard } from '../../components/dish-card'
 import { getDishesByCategory } from '../../utils/dishes-by-category'
 import { Stack } from '@mui/material'
@@ -9,17 +7,18 @@ import { formatDate } from '../../utils/format-date'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ConfirmationModal } from '../../components/modals/confirmation'
 import { ModalHandles } from '../../components/modals/modal'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useMenus } from '../../hooks/menu'
 import { IAction } from '../../interfaces/action'
+import { MenuForm } from '../../components/forms/menu'
 
 const MenuDetails: React.FC = () => {
 	const { id } = useParams()
-	const menu = useRecoilValue(menuAtom(Number(id)))
 
-	const { deleteMenu } = useMenus()
+	const { deleteMenu, menu } = useMenus(Number(id))
 
 	const deleteModalRef = useRef<ModalHandles>(null)
+	const editModalRef = useRef<ModalHandles>(null)
 
 	const navigate = useNavigate()
 
@@ -34,7 +33,7 @@ const MenuDetails: React.FC = () => {
 	const drinks = getDishesByCategory(menu, 'DRINK')
 
 	const editAction = () => {
-		//editModalRef.current?.open()
+		editModalRef.current?.open()
 	}
 
 	const deleteAction = () => {
@@ -67,11 +66,13 @@ const MenuDetails: React.FC = () => {
 
 			<ConfirmationModal
 				modalRef={deleteModalRef}
-				title={`Apagar cardápio do dia ${formatDate(menu.date)}?`}
+				title={`Apagar cardápio?`}
 				onConfirm={onDelete}
 			>
 				Você tem certeza que deseja apagar o cardápio? Essa ação não poderá ser desfeita!
 			</ConfirmationModal>
+
+			<MenuForm modalRef={editModalRef} menu={menu} />
 		</>
 	)
 }

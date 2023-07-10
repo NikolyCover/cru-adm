@@ -2,12 +2,14 @@ import { useForm } from 'react-hook-form'
 import { Butttons } from '../../buttons'
 import { Loading } from '../../loading'
 import Modal, { ModalHandles } from '../../modals/modal'
-import { Menu, MenuParamns } from '../../../schemas/menu'
+import { Menu, MenuFormParamns, MenuFormParamsSchema } from '../../../schemas/menu'
 import { useMenus } from '../../../hooks/menu'
 import { Stack } from '@mui/material'
 import { formatDate } from '../../../utils/format-date'
 import { DishesInput } from '../../dishes-select'
 import { useState } from 'react'
+import { getAllDishIds } from '../../../utils/get-dishes-ids'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 interface Props {
 	modalRef: React.RefObject<ModalHandles>
@@ -24,14 +26,14 @@ export const MenuForm: React.FC<Props> = ({ modalRef, menu, date }) => {
 		modalRef.current?.close()
 	}
 
-	const { control, handleSubmit } = useForm<MenuParamns>({
+	const { control, handleSubmit } = useForm<MenuFormParamns>({
 		defaultValues: {
-			dishesIds: [],
+			dishesIds: menu ? getAllDishIds(menu.organizedDishes) : []
 		},
-		//resolver: zodResolver(MenuParamsSchema),
+		resolver: zodResolver(MenuFormParamsSchema),
 	})
 
-	const onSubmit = async (params: MenuParamns) => {
+	const onSubmit = async (params: MenuFormParamns) => {
 		setIsLoading(true)
 
 		if (menu) {
@@ -45,7 +47,7 @@ export const MenuForm: React.FC<Props> = ({ modalRef, menu, date }) => {
 	}
 
 	return (
-		<Modal ref={modalRef} title={`${menu ? 'Editar' : 'Cadastrar'} Cardápio ${date && `em ${formatDate(date)}`}`}>
+		<Modal ref={modalRef} title={`${date ? `Cadastrar Cardápio em ${formatDate(date)}` : 'Editar Cardápio'}`}>
 			<Loading open={isLoading} />
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Stack gap={2}>

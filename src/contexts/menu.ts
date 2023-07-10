@@ -25,12 +25,14 @@ export const menuSelector = selectorFamily({
 	key: 'menu-selector',
 	get: (id: number) => async () => {
 		try {
-			const response = await getMenu(id)
-			return response.data
+			if(id != -1) {
+				const response = await getMenu(id)
+				return response.data
+			}
 		} catch (error) {
 			console.log('Error fetching menu: ', error as AxiosError)
-			return undefined
 		}
+		return undefined
 	},
 })
 

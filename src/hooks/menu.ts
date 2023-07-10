@@ -1,16 +1,25 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { menusAtom } from '../contexts/menu'
+import { menuAtom, menusAtom } from '../contexts/menu'
 import { Event } from 'react-big-calendar'
-import { MenuParamns } from '../schemas/menu'
+import { MenuFormParamns } from '../schemas/menu'
 import { createMenu, deleteMenu, updateMenu } from '../services/menu'
 import { feedbackAtom } from '../contexts/feedback'
-import { CREATE_MENU_ERROR_MESSAGE, CREATE_MENU_SUCESS_MESSAGE, DELETE_MENU_ERROR_MESSAGE, DELETE_MENU_SUCESS_MESSAGE, EDIT_MENU_ERROR_MESSAGE, EDIT_MENU_SUCESS_MESSAGE } from '../constants/messages'
+import {
+	CREATE_MENU_ERROR_MESSAGE,
+	CREATE_MENU_SUCESS_MESSAGE,
+	DELETE_MENU_ERROR_MESSAGE,
+	DELETE_MENU_SUCESS_MESSAGE,
+	EDIT_MENU_ERROR_MESSAGE,
+	EDIT_MENU_SUCESS_MESSAGE,
+} from '../constants/messages'
 import { AxiosError } from 'axios'
 import { HTTPStatus } from '../interfaces/http-status'
 import { dishesAtom } from '../contexts/dish'
+import { transformMenuFormParams } from '../utils/transform-menu-form-params'
 
-export const useMenus = () => {
+export const useMenus = (id?: number) => {
 	const [menus, setMenus] = useRecoilState(menusAtom)
+	const [menu, setMenu] = useRecoilState(menuAtom(id ?? -1))
 	const dishes = useRecoilValue(dishesAtom)
 
 	const setFeedback = useSetRecoilState(feedbackAtom)
@@ -21,12 +30,12 @@ export const useMenus = () => {
 		allDay: true,
 		start: new Date(menu.date),
 		end: new Date(menu.date),
-		resource: menu
+		resource: menu,
 	}))
 
-	const create = async (paramns: MenuParamns, date: Date) => {
+	const create = async (params: MenuFormParamns, date: Date) => {
 		try {
-			const { data } = await createMenu(paramns, date)
+			const { data } = await createMenu(transformMenuFormParams(params), date)
 
 			setMenus((menus) => [...menus, data])
 
@@ -42,11 +51,11 @@ export const useMenus = () => {
 		}
 	}
 
-	const update = async (params: MenuParamns, id: number) => {
+	const update = async (params: MenuFormParamns, id: number) => {
 		try {
-			const { data } = await updateMenu(params, id)
+			const { data } = await updateMenu(transformMenuFormParams(params), id)
 
-			setMenus((menus) => [...menus.filter((menu) => menu.id !== id), data].sort((a, b) => a.id - b.id))
+			setMenu(data)
 
 			setFeedback({
 				value: 'success',
@@ -83,6 +92,7 @@ export const useMenus = () => {
 		createMenu: create,
 		updateMenu: update,
 		deleteMenu: del,
-		dishes
+		dishes,
+		menu
 	}
 }

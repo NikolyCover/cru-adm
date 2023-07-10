@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import { ArrayPath, Control, FieldArray, Path, useFieldArray } from 'react-hook-form'
@@ -23,24 +23,24 @@ export function DishesInput<T extends object>({ items, control, name, defaultVal
 	const appendDish = useCallback(() => append(defaultValue, { shouldFocus: true }), [])
 	const removeDish = useCallback((index: number) => remove(index), [])
 
-	useEffect(() => {
-        return () => {
-			fields.map((field, index) => {
-				remove(index)
-			})
-        }
-    }, [])
+	// useEffect(() => {
+    //     return () => {
+	// 		fields.map((field, index) => {
+	// 			remove(index)
+	// 		})
+    //     }
+    // }, [])
 
 	return (
 		<>
 			<Typography>Pratos:</Typography>
 			<Grid container spacing={2} sx={{ width: 1000 }}>
 				{fields.map((item, index) => (
-					<Grid item xs={4}>
+					<Grid item xs={4} key={item.id}>
 						<Stack direction="row" alignItems="center" gap={2} key={item.id}>
 							<ControlledInput
 								control={control}
-								name={`${name}.${index}` as Path<T>}
+								name={`${name}.${index}.value` as Path<T>}
 								select
 								items={items}
 							/>
