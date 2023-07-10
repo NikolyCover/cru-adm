@@ -43,7 +43,7 @@ const MenuDetails: React.FC = () => {
 
 	const onDelete = async () => {
 		menu && (await deleteMenu(menu.id))
-		navigate('/')
+		navigate(-1)
 	}
 
 	const options: IAction[] = [
